@@ -360,7 +360,8 @@ FodyWeavers.xsd
 .vs/
 
 # Project Binary
-Bin/
+Build/
 
 # vcpkg
-Thirdparty/vcpkg_installed
+External/VcpkgInstalled
+Projects/External/VcpkgInstalled/.msbuildstamp-x64-windows.stamp

@@ -12,9 +12,6 @@
     <ClCompile Include="MetaTest.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Meta.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerComponent.cpp">
       <Filter>Source</Filter>
     </ClCompile>

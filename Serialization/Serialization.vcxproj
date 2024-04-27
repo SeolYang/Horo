@@ -12,7 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Meta.cpp" />
     <ClCompile Include="MetaTest.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
   </ItemGroup>

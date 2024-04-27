@@ -4,7 +4,6 @@
 template <>
 void DefineMeta<Player>()
 {
-    entt::meta<Player>().type(entt::type_hash<Player>::value());
     entt::meta<Player>().prop("JsonSerializable"_hs);
     entt::meta<Player>().prop("BebopSerializable"_hs);
     IG_DEFINE_META_TO_JSON(Player);

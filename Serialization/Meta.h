@@ -66,5 +66,8 @@ void RemoveComponent(entt::registry* registry, const entt::entity entity)
     }                                                                             \
     T##_DefineMeta T##_DefineMeta::_reg;
 
-#define IG_DEFINE_META_TO_JSON(T)   entt::meta<T>().template func<&SerializeTypeless<nlohmann::json, T>>("ToJson"_hs)
-#define IG_DEFINE_META_FROM_JSON(T) entt::meta<T>().template func<&DeserializeTypeless<nlohmann::json, T>>("FromJson"_hs)
+constexpr inline entt::hashed_string SerializeJson = "SerializeJson"_hs;
+constexpr inline entt::hashed_string DeserializeJson = "DeserializeJson"_hs;
+
+#define IG_DEFINE_META_SERIALIZE_JSON(T)   entt::meta<T>().template func<&SerializeTypeless<nlohmann::json, T>>(SerializeJson)
+#define IG_DEFINE_META_DESERIALIZE_JSON(T) entt::meta<T>().template func<&DeserializeTypeless<nlohmann::json, T>>(DeserializeJson)

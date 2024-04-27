@@ -1,14 +1,9 @@
 #include <catch2/catch_test_macros.hpp>
 #include "PlayerComponent.h"
+#include "Serialization.h"
 
-TEST_CASE("Meta")
+TEST_CASE("RegistrySeDeserialization")
 {
-    REQUIRE(entt::resolve<Player>());
-    REQUIRE(entt::resolve<Player>().prop("JsonSerializable"_hs));
-    REQUIRE(entt::resolve<Player>().prop("BebopSerializable"_hs));
-    REQUIRE(entt::resolve<Player>().func("ToJson"_hs));
-    REQUIRE(entt::resolve<Player>().func("FromJson"_hs));
-
     entt::registry srcRegistry;
     entt::entity dummy = srcRegistry.create();
     srcRegistry.destroy(dummy);
@@ -26,12 +21,12 @@ TEST_CASE("Meta")
             const void* value = storage->value(entity);
             if (value != nullptr)
             {
-                auto toJson = type.func("ToJson"_hs);
-                if (toJson)
+                nlohmann::json typeRoot;
+                typeRoot["ID"] = static_cast<uint64_t>(typeID);
+                auto serializeJson = type.func(SerializeJson);
+                if (serializeJson)
                 {
-                    nlohmann::json typeRoot;
-                    typeRoot["ID"] = static_cast<uint64_t>(typeID);
-                    toJson.invoke(type, &typeRoot, value);
+                    serializeJson.invoke(type, &typeRoot, value);
                     entityRoot[type.prop("Name"_hs).value().cast<const char*>()] = typeRoot;
                 }
             }
@@ -57,7 +52,7 @@ TEST_CASE("Meta")
         nlohmann::json& entityRoot = rootItr.value();
         for (const nlohmann::json& componentRoot : entityRoot)
         {
-            const auto componentTypeID = static_cast<entt::id_type >((uint64_t)componentRoot["ID"]);
+            const auto componentTypeID = static_cast<entt::id_type>((uint64_t)componentRoot["ID"]);
             auto type = entt::resolve(componentTypeID);
             if (!type)
             {
@@ -76,18 +71,25 @@ TEST_CASE("Meta")
                 continue;
             }
 
-            auto fromJson = type.func("FromJson"_hs);
-            if (!fromJson)
+            auto deserializeJson = type.func(DeserializeJson);
+            if (!deserializeJson)
             {
                 continue;
             }
 
             // 기존 signature랑 완벽하게 일치하지 않으면 호출이 아에 안됨!
-            fromJson.invoke(type, &componentRoot, component);
+            deserializeJson.invoke(type, &componentRoot, component);
         }
     }
 
     Player& deserializedData = dstRegistry.get<Player>(playerEntity);
     REQUIRE(testData.HP == deserializedData.HP);
     REQUIRE(testData.MP == deserializedData.MP);
+}
+
+TEST_CASE("Meta")
+{
+    REQUIRE(entt::resolve<Player>());
+    REQUIRE(entt::resolve<Player>().func(SerializeJson));
+    REQUIRE(entt::resolve<Player>().func(DeserializeJson));
 }

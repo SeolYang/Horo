@@ -21,6 +21,9 @@
     <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="Serialization.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\nlohmann_json.natvis" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

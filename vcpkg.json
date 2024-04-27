@@ -5,6 +5,7 @@
     "dependencies": 
     [
       "catch2",
-      "entt"
+      "entt",
+      "nlohmann-json"
     ]
   }

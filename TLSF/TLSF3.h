@@ -26,8 +26,10 @@ namespace gen3
     private:
         void Insert(TLSFBlock* block);
         TLSFBlock* ExtractHead(const size_t firstLevelIdx, const size_t secondLevelIdx);
-        // Free list에서 제거, fli 그리고 sli 계산 후 bitmap 업데이트 및 만약 블럭이 해당 레벨에서의 헤드 노드인 경우 freeLists 요소를 null로
         void Extract(TLSFBlock* block);
+
+
+        void Merge(TLSFBlock* baseBlock, TLSFBlock* targetBlock);
 
     private:
         size_t memoryPoolSize = 0;

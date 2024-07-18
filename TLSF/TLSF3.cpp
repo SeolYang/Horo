@@ -108,7 +108,7 @@ namespace gen3
         if (allocSize < extractedBlock->Size)
         {
             TLSFBlock* splittedBlock = new TLSFBlock;
-            splittedBlock->Offset = allocSize;
+            splittedBlock->Offset = extractedBlock->Offset + allocSize;
             splittedBlock->Size = extractedBlock->Size - allocSize;
             splittedBlock->PrevPhysicalBlock = extractedBlock;
 
@@ -126,44 +126,74 @@ namespace gen3
     {
         // assert; allocation.Block != nullptr
         // assert; allocation.Block->bIsUsed
-        TLSFBlock* extractTargetBlock = nullptr;
-        TLSFBlock* mergeBaseBlock = nullptr;
-        TLSFBlock* mergeTargetBlock = nullptr;
+        const bool bPrevPhysicalBlockMergeable = allocation.Block->PrevPhysicalBlock != nullptr && !allocation.Block->PrevPhysicalBlock->bIsUsed;
+        const bool bNextPhysicalBlockMergeable = allocation.Block->NextPhysicalBlock != nullptr && !allocation.Block->NextPhysicalBlock->bIsUsed;
+        // Case 1: 양 쪽 모두 가용 블럭인 경우
+        if (bPrevPhysicalBlockMergeable && bNextPhysicalBlockMergeable)
+        {
+            TLSFBlock* leftBlock = allocation.Block->PrevPhysicalBlock;
+            TLSFBlock* midBlock = allocation.Block;
+            TLSFBlock* rightBlock = allocation.Block->NextPhysicalBlock;
 
-        if (allocation.Block->PrevPhysicalBlock != nullptr && !allocation.Block->PrevPhysicalBlock->bIsUsed)
-        {
-            extractTargetBlock = allocation.Block->PrevPhysicalBlock;
-            mergeBaseBlock = allocation.Block->PrevPhysicalBlock;
-            mergeTargetBlock = allocation.Block;
-        }
-        else if (allocation.Block->NextPhysicalBlock != nullptr && !allocation.Block->NextPhysicalBlock->bIsUsed)
-        {
-            extractTargetBlock = allocation.Block->NextPhysicalBlock;
-            mergeBaseBlock = allocation.Block;
-            mergeTargetBlock = allocation.Block->NextPhysicalBlock;
-        }
+            Extract(leftBlock);
+            Extract(rightBlock);
 
-        if (extractTargetBlock == nullptr)
+            leftBlock->Size += (midBlock->Size + rightBlock->Size);
+            leftBlock->NextPhysicalBlock = rightBlock->NextPhysicalBlock;
+            if (rightBlock->NextPhysicalBlock != nullptr)
+            {
+                // assert; rightBlock == rightBlock->NextPhysicalBlock->PrevPhysicalBlock
+                rightBlock->NextPhysicalBlock->PrevPhysicalBlock = leftBlock;
+            }
+
+            delete midBlock;
+            delete rightBlock;
+            Insert(leftBlock);
+        }
+        else if (bPrevPhysicalBlockMergeable || bNextPhysicalBlockMergeable)
         {
+            TLSFBlock* extractTargetBlock = nullptr;
+            TLSFBlock* mergeBaseBlock = nullptr;
+            TLSFBlock* mergeTargetBlock = nullptr;
+
+            // Case 2: 앞 쪽 블럭만 가용 블럭인 경우
+            if (bPrevPhysicalBlockMergeable)
+            {
+                extractTargetBlock = allocation.Block->PrevPhysicalBlock;
+                mergeBaseBlock = allocation.Block->PrevPhysicalBlock;
+                mergeTargetBlock = allocation.Block;
+            }
+
+            // Case 3: 뒷 쪽 블럭만 가용 블럭인 경우
+            else if (bNextPhysicalBlockMergeable)
+            {
+                extractTargetBlock = allocation.Block->NextPhysicalBlock;
+                mergeBaseBlock = allocation.Block;
+                mergeTargetBlock = allocation.Block->NextPhysicalBlock;
+            }
+
+            Extract(extractTargetBlock);
+
+            // assert; mergeBaseBlock != nullptr; mergeTargetBlock != nullptr
+            // assert; mergeBaseBlock->Offset < mergeTargetBlock->Offset
+            mergeBaseBlock->Size += mergeTargetBlock->Size;
+            mergeBaseBlock->NextPhysicalBlock = mergeTargetBlock->NextPhysicalBlock;
+            if (mergeTargetBlock->NextPhysicalBlock != nullptr)
+            {
+                mergeTargetBlock->NextPhysicalBlock->PrevPhysicalBlock = mergeBaseBlock;
+            }
+            mergeBaseBlock->bIsUsed = false;
+            Insert(mergeBaseBlock);
+
+            delete mergeTargetBlock;
+            mergeTargetBlock = nullptr;
+        }
+        // Case 4: 양 쪽 모두 가용 블럭이 아닌 경우
+        else
+        {
+            allocation.Block->bIsUsed = false;
             Insert(allocation.Block);
-            return;
         }
-
-        Extract(extractTargetBlock);
-
-        // assert; mergeBaseBlock != nullptr; mergeTargetBlock != nullptr
-        // assert; mergeBaseBlock->Offset < mergeTargetBlock->Offset
-        mergeBaseBlock->Size += mergeTargetBlock->Size;
-        mergeBaseBlock->NextPhysicalBlock = mergeTargetBlock->NextPhysicalBlock;
-        if (mergeTargetBlock->NextPhysicalBlock != nullptr)
-        {
-            mergeTargetBlock->NextPhysicalBlock->PrevPhysicalBlock = mergeBaseBlock;
-        }
-        mergeBaseBlock->bIsUsed = false;
-        Insert(mergeBaseBlock);
-
-        delete mergeTargetBlock;
-        mergeTargetBlock = nullptr;
     }
 
     void TLSFAllocator::Insert(TLSFBlock* block)

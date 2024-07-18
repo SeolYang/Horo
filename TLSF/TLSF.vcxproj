@@ -13,14 +13,10 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Test.cpp" />
-    <ClCompile Include="TLSF.cpp" />
     <ClCompile Include="TLSF3.cpp" />
-    <ClCompile Include="TLSFT_GENERALIZED.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TLSF.h" />
     <ClInclude Include="TLSF3.h" />
-    <ClInclude Include="TLSF_GENERALIZED.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

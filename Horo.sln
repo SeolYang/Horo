@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Serialization", "Serializat
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SparseSet", "SparseSet\SparseSet.vcxproj", "{F774C4A8-CBDC-4103-BF98-75107F502D8D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TLSF", "TLSF\TLSF.vcxproj", "{EF6E5FA0-1518-4F9E-80FF-D2115097C57C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,10 @@ Global
 		{F774C4A8-CBDC-4103-BF98-75107F502D8D}.Debug|x64.Build.0 = Debug|x64
 		{F774C4A8-CBDC-4103-BF98-75107F502D8D}.Release|x64.ActiveCfg = Release|x64
 		{F774C4A8-CBDC-4103-BF98-75107F502D8D}.Release|x64.Build.0 = Release|x64
+		{EF6E5FA0-1518-4F9E-80FF-D2115097C57C}.Debug|x64.ActiveCfg = Debug|x64
+		{EF6E5FA0-1518-4F9E-80FF-D2115097C57C}.Debug|x64.Build.0 = Debug|x64
+		{EF6E5FA0-1518-4F9E-80FF-D2115097C57C}.Release|x64.ActiveCfg = Release|x64
+		{EF6E5FA0-1518-4F9E-80FF-D2115097C57C}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

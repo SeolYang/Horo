@@ -80,6 +80,7 @@ namespace gen3
             }
         }
 
+        // Case 1: 요구된 크기의 클래스에 속하는 블럭이 없는 경우
         if (foundFirstLevelIdx == InvalidTLSFLevelIdx)
         {
             return TLSFAllocation{};
@@ -96,15 +97,14 @@ namespace gen3
             }
         }
 
+        // Case 2: 요구된 크기의 클래스에 속하는 가용 블럭은 존재하지만, 세부 클래스(2nd level)에 속하는 가용 블럭은 없는 경우
         if (foundSecondLevelIdx == InvalidTLSFLevelIdx)
         {
             return TLSFAllocation{};
         }
 
-        // Extract Block!
         TLSFBlock* extractedBlock = ExtractHead(foundFirstLevelIdx, foundSecondLevelIdx);
 
-        // Create New Block if necessary!
         if (allocSize < extractedBlock->Size)
         {
             TLSFBlock* splittedBlock = new TLSFBlock;
@@ -112,10 +112,16 @@ namespace gen3
             splittedBlock->Size = extractedBlock->Size - allocSize;
             splittedBlock->PrevPhysicalBlock = extractedBlock;
 
-            // #note Merge 시 합쳐지는 블럭의 앞 뒤 블럭의 Physical Block Ptr를 적절히 업데이트 하기 위해서 사용
             extractedBlock->Size = allocSize;
             extractedBlock->NextPhysicalBlock = splittedBlock;
             Insert(splittedBlock);
+        }
+        // Case 3: 요구된 크기의 클래스에 만족하는 블럭은 있지만, 요구된 크기에 정확히 맞는 블럭이 없는 경우
+        // @note 이 경우, 첫 번째 head 노드가 크기에 맞지 않는 경우만 상정하기 때문에.. 필요하다면 해당 free list를 순회하여
+        // 요구 크기에 맞는 블럭을 탐색 할 수는 있을 것 같음
+        else
+        {
+            return TLSFAllocation{};
         }
 
         extractedBlock->bIsUsed = true;

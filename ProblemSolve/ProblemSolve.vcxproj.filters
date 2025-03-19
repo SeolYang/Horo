@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Bronze">
+      <UniqueIdentifier>{f36d9d3a-fbe7-4d37-ace1-5f088a499277}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Silver">
+      <UniqueIdentifier>{b9a93e0b-3ce6-4bf5-b4f5-70c957c6c30e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gold">
+      <UniqueIdentifier>{4603ce75-f731-4e0e-808d-de749b31a613}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Unknown">
+      <UniqueIdentifier>{119400dd-fc93-4ac0-ae34-3a554abb6719}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Bronze\10809.h">
+      <Filter>Bronze</Filter>
+    </ClInclude>
+    <ClInclude Include="Bronze\8958.h">
+      <Filter>Bronze</Filter>
+    </ClInclude>
+    <ClInclude Include="Gold\1074.h">
+      <Filter>Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="Unknown\33510.h">
+      <Filter>Unknown</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

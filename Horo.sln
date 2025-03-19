@@ -9,6 +9,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SparseSet", "SparseSet\Spar
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TLSF", "TLSF\TLSF.vcxproj", "{EF6E5FA0-1518-4F9E-80FF-D2115097C57C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProblemSolve", "ProblemSolve\ProblemSolve.vcxproj", "{5E979654-868D-4873-AC4A-B8F768263316}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimplePomodoro", "SimplePomodoro\SimplePomodoro.vcxproj", "{7D897ED5-9B2D-4F62-AF23-B88C347CA517}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -27,6 +31,14 @@ Global
 		{EF6E5FA0-1518-4F9E-80FF-D2115097C57C}.Debug|x64.Build.0 = Debug|x64
 		{EF6E5FA0-1518-4F9E-80FF-D2115097C57C}.Release|x64.ActiveCfg = Release|x64
 		{EF6E5FA0-1518-4F9E-80FF-D2115097C57C}.Release|x64.Build.0 = Release|x64
+		{5E979654-868D-4873-AC4A-B8F768263316}.Debug|x64.ActiveCfg = Debug|x64
+		{5E979654-868D-4873-AC4A-B8F768263316}.Debug|x64.Build.0 = Debug|x64
+		{5E979654-868D-4873-AC4A-B8F768263316}.Release|x64.ActiveCfg = Release|x64
+		{5E979654-868D-4873-AC4A-B8F768263316}.Release|x64.Build.0 = Release|x64
+		{7D897ED5-9B2D-4F62-AF23-B88C347CA517}.Debug|x64.ActiveCfg = Debug|x64
+		{7D897ED5-9B2D-4F62-AF23-B88C347CA517}.Debug|x64.Build.0 = Debug|x64
+		{7D897ED5-9B2D-4F62-AF23-B88C347CA517}.Release|x64.ActiveCfg = Release|x64
+		{7D897ED5-9B2D-4F62-AF23-B88C347CA517}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

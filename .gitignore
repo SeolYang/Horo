@@ -365,3 +365,7 @@ Build/
 # vcpkg
 External/VcpkgInstalled
 Projects/External/VcpkgInstalled/.msbuildstamp-x64-windows.stamp
+
+*.idb
+*.obj
+*.recipe

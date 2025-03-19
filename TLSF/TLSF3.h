@@ -28,9 +28,6 @@ namespace gen3
         TLSFBlock* ExtractHead(const size_t firstLevelIdx, const size_t secondLevelIdx);
         void Extract(TLSFBlock* block);
 
-
-        void Merge(TLSFBlock* baseBlock, TLSFBlock* targetBlock);
-
     private:
         size_t memoryPoolSize = 0;
 
